@@ -1,0 +1,27 @@
+#comment
+
+
+
+
+
+find_helper () {
+  read -p "Would you like to search by name? Y/N " answer
+  if [[ "$answer" == "Y" ]]; then
+    read -p "Please enter name: " name
+    read -p "Please enter path: " path
+    printf "The Name is %s, The Path is: %s\n" "$name" "$path"
+
+  fi
+}
+
+if [[ -z "$1" ]]; then
+  printf "Welcome to helper toolz\n
+  You can use with the flags .....\n
+  -f > For Find Helper
+  -s > System Information\n"
+elif [[ "$1" == "-f" ]]; then
+  echo "The -f flag was provided... -> $1"
+  find_helper
+else
+  echo "Wrong parameter provided: $1"
+fi
