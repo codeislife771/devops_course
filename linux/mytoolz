@@ -1,8 +1,11 @@
-#comment
+# 🧭 Determines the actual script location, even when cast.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+HELPER_DIR="$SCRIPT_DIR/utils"
 
-
-. find_functions.sh  # Source the find helper functions
-
+# 📦 Loads the functions from the utils folder
+source "$HELPER_DIR/system_info.sh"
+source "$HELPER_DIR/find_helper.sh"
+source "$HELPER_DIR/user_management.sh"
 
 
 if [[ -z "$1" ]]; then
@@ -16,8 +19,11 @@ Available flags:
 
 "
 elif [[ "$1" == "-f" ]]; then
-  echo "The -f flag was provided - running the function find_helpe:... -> $1"
   find_helper
+elif [[ "$1" == "-s" ]]; then
+  system_info
+elif [[ "$1" == "-u" ]]; then
+  user_management
 else
   echo "Wrong parameter provided: $1"
 fi
