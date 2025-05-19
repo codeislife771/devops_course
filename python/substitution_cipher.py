@@ -19,23 +19,31 @@ Run this script directly to see an example encryption-decryption process:
 """
 
 import random
+import string
 
 def make_encryption_key():
-    alphabet = list('abcdefghijklmnopqrstuvwxyz')
-    shuffled_alphabet = alphabet.copy()
-    random.shuffle(shuffled_alphabet)
+    # Step 1: Build character list to encrypt
+    char = " " + string.ascii_lowercase + string.digits + string.punctuation
+    char = list(char)
 
+    # Step 2: Shuffle until valid (no character maps to itself)
+    while True:
+        shuffled_char = char.copy()
+        random.shuffle(shuffled_char)
+
+        is_valid = True
+        for original, shuffled in zip(char, shuffled_char):
+            if original == shuffled:
+                is_valid = False
+                break
+
+        if is_valid:
+            break
+
+    # Step 3: Build final encryption key
     cipher_key = {}
-
-    for id_letter in range(len(alphabet)):
-        alphabet_letter = alphabet[id_letter]
-
-        while alphabet_letter == shuffled_alphabet[id_letter]:
-            random.shuffle(shuffled_alphabet)
-        else:
-            cipher_key[alphabet[id_letter]] = shuffled_alphabet[id_letter]
-
-    cipher_key[" "] = " "
+    for original, shuffled in zip(char, shuffled_char):
+        cipher_key[original] = shuffled
 
     return cipher_key
 
@@ -43,35 +51,42 @@ def compute_dec_key(enc_key):
     dec_key = {value: key for key, value in enc_key.items()}
     return dec_key
 
-# Encrypt text using the encryption key
 def encrypt_text(text, enc_key):
     result_encrypt_text = []
-    text = text.strip().lower()
     for letter in text:
         result_encrypt_text.append(enc_key.get(letter, letter))
     return result_encrypt_text
 
-# Decrypt text using the decryption key
 def decrypt_text(encrypted_text, dec_key):
     decrypted_text = ""
     for letter in encrypted_text:
         decrypted_text += dec_key.get(letter, letter)
     return decrypted_text
 
-# Demonstration of the complete encryption-decryption process
+def test_key(cipher_key):
+    values = list(cipher_key.values())
+    if len(values) != len(set(values)):
+        print("❌ Test failed: Duplicate values in cipher_key!")
+    elif any(k == v for k, v in cipher_key.items()):
+        print("❌ Test failed: Some characters map to themselves!")
+    else:
+        print("✅ Test passed: Valid cipher key.")
+
 def test_all():
     print('--------------------------------')
-    text = "hello world."
+    text = "hello world. test123!"
     enc_key = make_encryption_key()
     dec_key = compute_dec_key(enc_key)
 
     encrypted_text = encrypt_text(text, enc_key)
     decrypted_text = decrypt_text(encrypted_text, dec_key)
-    print("Original Text:", text)
-    print("Encryption Key:", enc_key)
-    print("Decryption Key:", dec_key)
-    print("Encrypted Text:", encrypted_text)
-    print("Decrypted Text:", decrypted_text)
+
+    print("Original Text:     ", repr(text))
+    print("Encrypted Text:    ", encrypted_text)
+    print("Decrypted Text:    ", repr(decrypted_text))
+    print("Match?             ", text == decrypted_text)
+
+    test_key(enc_key)
 
 if __name__ == "__main__":
     test_all()
