@@ -12,8 +12,7 @@ def intract_with_user():
         if user_command == 'q':
             print('Bye bye! See you next time!')
             break
-
-                
+              
 def create_enc_and_dec_keys():
     encryped_keys = random_substitution_cipher.make_encryption_key()
     decrypted_keys = random_substitution_cipher.compute_dec_key(encryped_keys)
@@ -64,7 +63,6 @@ def handle_command_from_user(enc_and_dec_keys):
                 print(f'Deccrypted Text: "{user_decrypted_text}"')
                 return user_decrypted_text
         
-
 
 if __name__ == "__main__":
     

@@ -28,27 +28,32 @@ def make_encryption_key():
 
     # Step 2: Shuffle until valid (no character maps to itself)
     while True:
+        print('-------------- Start Shuffle ------------------')
         shuffled_char = char.copy()
         random.shuffle(shuffled_char)
-
+        cipher_key = {}
+        
         # long way
-        # is_valid = True
-        # for original, shuffled in zip(char, shuffled_char):
-        #     if original == shuffled:
-        #         is_valid = False
-        #         break
+        is_valid = True
+        for char_id in range(len(char)):
+            if char[char_id] == shuffled_char[char_id]:
+                print('❌ Test failed: Some characters map to themselves!', char[char_id], shuffled_char[char_id])
+                is_valid = False
+                break
+            else:
+                cipher_key[char[char_id]] = shuffled_char[char_id]
+        if is_valid:
+            break
+            
 
-        # if is_valid:
-        #     break
-
-        # short way
-        if all(original != shuffled for original, shuffled in zip(char, shuffled_char)): break
+        # # short way - after running the long way, need to map the cipher_key to the original char
+        # if all(original != shuffled for original, shuffled in zip(char, shuffled_char)): break
         
 
     # Step 3: Build final encryption key
-    cipher_key = {}
-    for original, shuffled in zip(char, shuffled_char):
-        cipher_key[original] = shuffled
+    # cipher_key = {}
+    # for original, shuffled in zip(char, shuffled_char):
+    #     cipher_key[original] = shuffled
 
     return cipher_key
 
@@ -80,7 +85,7 @@ def test_key(cipher_key):
 
 def test_all():
     print('--------------------------------')
-    text = "hello world. test123!"
+    text = "hello world. testasdasdas!@#!@#!123!"
     enc_key = make_encryption_key()
     dec_key = compute_dec_key(enc_key)
 
