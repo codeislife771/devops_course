@@ -74,7 +74,8 @@ sudo apt install jenkins -y
     # - Download Jenkins Manually via WAR - Checking jenkins.war stable version -> https://get.jenkins.io/war-stable/
     mkdir -p ~/jenkins
     cd ~/jenkins
-    wget https://get.jenkins.io/war-stable/2.426.1/jenkins.war
+    wget https://get.jenkins.io/war-stable/2.504.1/jenkins.war
+    
     echo "Starting Jenkins..."
 
     # 2 Options to running jenkins.war file
