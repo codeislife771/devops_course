@@ -28,7 +28,6 @@ def make_encryption_key():
 
     # Step 2: Shuffle until valid (no character maps to itself)
     while True:
-        print('-------------- Start Shuffle ------------------')
         shuffled_char = char.copy()
         random.shuffle(shuffled_char)
         cipher_key = {}
@@ -37,7 +36,7 @@ def make_encryption_key():
         is_valid = True
         for char_id in range(len(char)):
             if char[char_id] == shuffled_char[char_id]:
-                print('❌ Test failed: Some characters map to themselves!', char[char_id], shuffled_char[char_id])
+                # print('❌ Test failed: Some characters map to themselves!', char[char_id], shuffled_char[char_id])
                 is_valid = False
                 break
             else:
@@ -46,7 +45,7 @@ def make_encryption_key():
             break
             
 
-        # # short way - after running the long way, need to map the cipher_key to the original char
+        # # short way - after runningitg the long way, need to map the cipher_key to the original char
         # if all(original != shuffled for original, shuffled in zip(char, shuffled_char)): break
         
 
@@ -54,7 +53,6 @@ def make_encryption_key():
     # cipher_key = {}
     # for original, shuffled in zip(char, shuffled_char):
     #     cipher_key[original] = shuffled
-
     return cipher_key
 
 def compute_dec_key(enc_key):
