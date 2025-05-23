@@ -32,27 +32,27 @@ def make_encryption_key():
         random.shuffle(shuffled_char)
         cipher_key = {}
         
-        # long way
-        is_valid = True
-        for char_id in range(len(char)):
-            if char[char_id] == shuffled_char[char_id]:
-                # print('❌ Test failed: Some characters map to themselves!', char[char_id], shuffled_char[char_id])
-                is_valid = False
-                break
-            else:
-                cipher_key[char[char_id]] = shuffled_char[char_id]
-        if is_valid:
-            break
+        # # long way
+        # is_valid = True
+        # for char_id in range(len(char)):
+        #     if char[char_id] == shuffled_char[char_id]:
+        #         # print('❌ Test failed: Some characters map to themselves!', char[char_id], shuffled_char[char_id])
+        #         is_valid = False
+        #         break
+        #     else:
+        #         cipher_key[char[char_id]] = shuffled_char[char_id]
+        # if is_valid:
+        #     break
             
 
-        # # short way - after runningitg the long way, need to map the cipher_key to the original char
-        # if all(original != shuffled for original, shuffled in zip(char, shuffled_char)): break
+        # short way - after runningitg the long way, need to map the cipher_key to the original char
+        if all(original != shuffled for original, shuffled in zip(char, shuffled_char)): break
         
 
     # Step 3: Build final encryption key
-    # cipher_key = {}
-    # for original, shuffled in zip(char, shuffled_char):
-    #     cipher_key[original] = shuffled
+    cipher_key = {}
+    for original, shuffled in zip(char, shuffled_char):
+        cipher_key[original] = shuffled
     return cipher_key
 
 def compute_dec_key(enc_key):
@@ -71,6 +71,9 @@ def decrypt_text(encrypted_text, dec_key):
     for letter in encrypted_text:
         decrypted_text += dec_key.get(letter, letter)
     return decrypted_text
+
+def save_enc_dec__keys_to_json_file():
+    pass
 
 def test_key(cipher_key):
     values = list(cipher_key.values())
