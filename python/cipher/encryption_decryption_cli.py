@@ -43,7 +43,11 @@ def decrypt_user_text(user_command_dec,decryped_keys):
 
 def save_encrypted_text_to_file(user_encrypted_text):
     encrypted_text_file = open("encrypted_text.json", 'w')
-    json.dump(user_encrypted_text, encrypted_text_file)
+    
+    encrypt_to_dict = {"Enc_Key": user_encrypted_text}
+    encrypt_to_json = json.dumps(encrypt_to_dict)
+
+    encrypted_text_file.write(encrypt_to_json)
     encrypted_text_file.close()
     
 def handle_user_enc_choise(enc_and_dec_keys):
