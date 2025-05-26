@@ -3,7 +3,6 @@ import json
 
 def intract_with_user():
     enc_and_dec_keys = create_enc_and_dec_keys()
-    random_substitution_cipher.save_enc_dec__keys_to_json_file()
     print_create_enc_and_dec()
     print_description_to_user()
     

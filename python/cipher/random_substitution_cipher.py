@@ -72,9 +72,6 @@ def decrypt_text(encrypted_text, dec_key):
         decrypted_text += dec_key.get(letter, letter)
     return decrypted_text
 
-def save_enc_dec__keys_to_json_file():
-    pass
-
 def test_key(cipher_key):
     values = list(cipher_key.values())
     if len(values) != len(set(values)):
