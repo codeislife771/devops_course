@@ -1,28 +1,15 @@
-# Start with Python 3.10 Alpine for compatibility with dependencies
-FROM python:3.10-alpine
-
-# Set working directory
-WORKDIR /app
-
-# Copy requirements first (for better Docker layer caching)
+FROM alpine:3.22.0
+RUN apk update 
+RUN apk add python3 
+RUN apk add python3 py3-pip
+RUN python3 -m venv venv
 COPY requirements.txt .
-
-# Install Python dependencies
-RUN pip install -r requirements.txt
-
+RUN ./venv/bin/pip install -r requirements.txt
 
 # Copy application files
+COPY  templates/index.html /templates/index.html
 COPY app.py .
-COPY templates/ ./templates/
+COPY tasks.json  .
 
-# Copy tasks.json (creates empty file if doesn't exist)
-COPY tasks.json* ./
-
-# # Expose port 5000
-# EXPOSE 5000
-
-# # Set environment variables for Docker
-# ENV FLASK_RUN_HOST=0.0.0.0
-
-# Run the Flask application
-CMD ["python", "app.py"]
+# Run using the venv's Python
+CMD [ "./venv/bin/python3", "app.py" ]
