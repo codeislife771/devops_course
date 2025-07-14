@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect
 import json
 from datetime import datetime
 import os
@@ -6,6 +6,7 @@ import os
 app = Flask(__name__)
 DATA_FILE = 'tasks.json'
 
+    
 def load_tasks():
     try:
         with open(DATA_FILE, 'r') as f:
@@ -16,6 +17,15 @@ def load_tasks():
 def save_tasks(tasks):
     with open(DATA_FILE, 'w') as f:
         json.dump(tasks, f, indent=2)
+
+
+@app.route('/', methods=['GET'])
+def redirect_to_tasks():
+    return redirect('/tasks', code=302)
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    return {"status": "ok"}, 200
 
 @app.route('/tasks', methods=['GET'])
 def home():
